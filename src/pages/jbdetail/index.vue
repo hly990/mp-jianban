@@ -3,6 +3,12 @@
     <div class="row  p-2 justify-content-center align-items-center">
       <p>hello,world!</p>
     </div>
+
+    <form>
+      <input type="text" class="form-control" />
+      <input type="text" class="form-control" />
+    </form>
+
   </div>
 
 </template>
