@@ -22,7 +22,8 @@ export default {
       'pages/comment/main',
       'pages/user/main',
       'pages/jbindex/main',
-      '^pages/jbdashboard/main'
+      '^pages/jbdashboard/main',
+      'pages/jbdetail/main'
     ],
     window: {
       backgroundTextStyle: 'light',
