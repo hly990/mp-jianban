@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 
 import './styles/custom.scss'
+import '../static/weui/weui.css'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
@@ -24,7 +25,8 @@ export default {
       'pages/jbindex/main',
       'pages/jbdashboard/main',
       'pages/jbdetail/main',
-      '^pages/jbtest/main'
+      '^pages/jbtest/main',
+      'pages/jblogin/main'
     ],
     window: {
       backgroundTextStyle: 'light',
