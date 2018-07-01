@@ -18,6 +18,25 @@
             <input class="weui-input" placeholder="XXX" />
           </div>
         </div>
+
+        <div class="weui-cell weui-cell_input weui-cell_vcode">
+          <div class="weui-cell__hd">
+            <div class="weui-label">上传图片</div>
+          </div>
+          <div class="weui-uploader__bd">
+            <div class="weui-uploader__files" id="uploaderFiles">
+              <block v-for="item in files" :key="index">
+                <div class="weui-uploader__file" @click="predivImage" :id="item">
+                  <image class="weui-uploader__img" :src="item" mode="aspectFill" />
+                </div>
+              </block>
+            </div>
+            <div class="weui-uploader__input-box">
+              <div class="weui-uploader__input" @click="chooseImage"></div>
+            </div>
+          </div>
+        </div>
+
         <div class="weui-cell weui-cell_input weui-cell_vcode">
           <div class="weui-cell__hd">
             <div class="weui-label">上传资料</div>
@@ -105,38 +124,8 @@
       }
     },
     methods: {
-      checkboxChange(e) {
-        console.log('checkbox发生change事件，携带value值为：' + e.mp.detail.value);
-        var checkboxItems = this.checkboxItems, values = e.mp.detail.value;
-        for (var i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
-          checkboxItems[i].checked = false;
-
-          for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
-            if (checkboxItems[i].value == values[j]) {
-              checkboxItems[i].checked = true;
-              break;
-            }
-          }
-        }
-        this.checkboxItems = checkboxItems;
-      },
-      radioChange(e) {
-        console.log('radio发生change事件，携带value值为：' + e.mp.detail.value);
-        let radioItems = this.radioItems;
-        for (let i = 0; i < radioItems.length; ++i) {
-          radioItems[i].checked = radioItems[i].value === e.mp.detail.value;
-        }
-        this.radioItems = radioItems;
-      },
-      switchChange(e) {
-        console.log("switch发生change事件，携带value值为："+ e.mp.detail.value);
-      },
       bindDateChange(e) {
         this.date = e.mp.detail.value;
-        console.log(e.mp.detail.value);
-      },
-      bindTimeChange(e) {
-        this.time = e.mp.detail.value;
         console.log(e.mp.detail.value);
       },
       showTopTipsFun() {
@@ -145,7 +134,6 @@
           this.showTopTips = false;
         }, 2000)
       },
-
       bindCountryChange(e) {
         this.countryIndex = e.mp.detail.value;
       },
@@ -166,6 +154,7 @@
           success: function (res) {
             // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
             _this.files = _this.files.concat(res.tempFilePaths)
+            console.log('res:'+JSON.stringify(res));
           },
           fail: function () {
             console.log('fail');
