@@ -50,7 +50,7 @@
               </block>
             </div>
             <div class="weui-uploader__input-box">
-              <div class="weui-uploader__input" @click="chooseImage"></div>
+              <div class="weui-uploader__input" @click="uploadFile"></div>
             </div>
           </div>
         </div>
@@ -153,8 +153,31 @@
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function (res) {
             // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-            _this.files = _this.files.concat(res.tempFilePaths)
+            _this.files = _this.files.concat(res.tempFilePaths);
             console.log('res:'+JSON.stringify(res));
+//            var uniqueId = generateUUID();
+//            var fileName = fileToLoad.name;
+//            var fileSize = fileToLoad.size;
+
+            wx.getImageInfo({
+              src: res.tempFilePaths[0],
+              success: function (res) {
+                console.log("getImageInfo:"+JSON.stringify(res));
+              }
+            });
+
+//            wx.uploadFile({
+//              url: 'http://localhost:8080/kie-server/services/rest/server/containers/jianban_1.1/processes/instances/255/variables',
+//              filePath: tempFilePaths[0],
+//              name: 'file',
+//              formData:{
+//                'originFile': ''
+//              },
+//              success: function(res){
+//                var data = res.data
+//                console.log(res);
+//              }
+//            })
           },
           fail: function () {
             console.log('fail');
@@ -164,12 +187,24 @@
           }
         })
       },
+      uploadFile(e) {
+
+      },
       predivImage(e) {
         console.log(e);
         wx.previewImage({
           current: e.currentTarget.id, // 当前显示图片的http链接
           urls: this.files // 需要预览的图片http链接列表
         })
+      },
+      generateUUID() {
+        var d = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = (d + Math.random()*16)%16 | 0;
+          d = Math.floor(d/16);
+          return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+        });
+        return uuid;
       }
     }
   }

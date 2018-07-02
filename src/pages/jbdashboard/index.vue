@@ -18,7 +18,7 @@
     <div class="row  pt-2 justify-content-center align-items-center">
       <h6>项目总进度表</h6>
     </div>
-    <a  :href="'/pages/jbdetail/main'">
+    <a  :href="'/pages/jbtest-upload/main'">
       <div class="row p-1">
           <div class="col-4 text-right align-items-center">签订及复核文件</div>
           <div class="col-6 p-2 bg-secondary text-white"></div>
