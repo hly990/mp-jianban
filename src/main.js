@@ -26,8 +26,8 @@ export default {
       'pages/jbdashboard/main',
       'pages/jbdetail/main',
       'pages/jbtest/main',
-      '^pages/jbtest-upload/main',
-      'pages/jblogin/main'
+      'pages/jbtest-upload/main',
+      '^pages/jblogin/main'
     ],
     window: {
       backgroundTextStyle: 'light',
