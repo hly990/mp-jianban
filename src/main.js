@@ -4,6 +4,10 @@ import App from './App'
 import './styles/custom.scss'
 import '../static/weui/weui.css'
 
+import globalData from '@/utils/config.js'
+
+Vue.prototype.globalData = globalData
+
 Vue.config.productionTip = false
 App.mpType = 'app'
 

@@ -23,7 +23,30 @@
 </template>
 
 <script>
+import api from '@/api/index'
 
+export default {
+  data() {
+    return {
+
+    }
+  },
+  mounted() {
+    this.getProjects()
+  },
+  methods: {
+    getProjects() {
+      // 获取项目列表接口
+      api.get('/server/containers/').then(response => {
+        //console.log(JSON.stringify(response))
+        var result = response.result
+        console.log(result['kie-containers']['kie-container'][0]['container-id'])
+      }).catch(error => {
+        console.log(error)
+      })
+    }
+  }
+}
 
 </script>
 

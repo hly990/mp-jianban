@@ -4,7 +4,8 @@ import _ from 'lodash'
 
 const api = new Fly()
 
-api.config.baseURL = 'https://cnodejs.org/api/v1'
+api.config.baseURL = 'http://localhost:8080/kie-server/services/rest'
+//api.config.baseURL = 'https://cnodejs.org/api/v1'
 
 api.interceptors.request.use((request) => {
   // 获取小程序自定义参数
