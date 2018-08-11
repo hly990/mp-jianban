@@ -9,8 +9,8 @@
 	},
 	"miniprogramRoot": "./dist/",
 	"compileType": "miniprogram",
-	"appid": "wxb0256103dc57ada5",
-	"projectname": "mp-jianban",
+	"appid": "wxb5062f11907a3bd5",
+	"projectname": "mp-jianban-v1",
 	"condition": {
 		"search": {
 			"current": -1,

@@ -27,12 +27,13 @@
             <div class="weui-label">密码</div>
           </div>
           <div class="weui-cell__bd">
-            <input class="weui-input" placeholder=" "/>
+            <input type="password" class="weui-input" placeholder=" "/>
           </div>
         </div>
       </div>
     </div>
     <div class="weui-btn-area">
+      <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" @click="login">登录</a>
       <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" :href="'/pages/jbindex/main'">登录</a>
     </div>
     <!--<a class="btn btn-lg text-white btn-block btn-secondary px-0"  @click="refuse">取消</a>-->
@@ -51,41 +52,31 @@
         console.log('refuse')
         wx.navigateBack({delta: 1})
       },
-      scan () {
-        wx.scanCode({
-          success: (res) => {
-            let data = {
-              accesstoken: res.result
-            }
-            api.post('/accesstoken', data).then(response => {
-              try {
-                wx.setStorageSync('accesstoken', data.accesstoken)
-                wx.setStorageSync('loginname', response.loginname)
-                wx.setStorageSync('avatar_url', response.avatar_url)
-                wx.setStorageSync('id', response.id)
-                store.commit('getLoginInfoByStore')
-                if (this.$root.$mp.query && this.$root.$mp.query.from) {
-                  wx.switchTab({
-                    url: '/pages/' + this.$root.$mp.query.from + '/main'
-                  })
-                } else {
-                  wx.navigateBack({delta: 1})
-                }
-              } catch (e) {
-                console.log(e)
-              }
-            }).catch(error => {
-              console.log(error)
-            })
-          }
+      login() {
+        let data = {
+          username: "krisv",
+          password: "krisv"
+        }
+        // 获取项目列表接口
+        api.get('/auth.do', data).then(response => {
+          console.log(JSON.stringify(response))
+          console.log(response[1])
+          var user = response[1]
+          wx.setStorageSync('username', user.username)
+          wx.setStorageSync('loginname', user.password)
+          wx.setStorageSync('roleId', user.roleId)
+          wx.navigateTo({
+            url: '/pages/jbindex/main'
+          })
+        }).catch(error => {
+          console.log(error)
         })
-      }
-    },
-    mounted () {
-      if (this.$root.$mp.query && this.$root.$mp.query.from) {
-        this.from = this.$root.$mp.query.from
+      },
+      mounted () {
+        if (this.$root.$mp.query && this.$root.$mp.query.from) {
+          this.from = this.$root.$mp.query.from
+        }
       }
     }
   }
-
 </script>

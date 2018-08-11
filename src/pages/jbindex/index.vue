@@ -10,7 +10,7 @@
     <template v-for="project in projects">
       <li>
         <div class="weui-btn-area">
-          <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" :href="'/pages/jbdashboard/main?{{project.containerId}}'">{{project.name}}</a>
+          <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" :href="'/pages/jbdashboard/main?containerId='+project.containerId+'&projectName='+project.name">{{project.name}}</a>
         </div>
       </li>
     </template>
