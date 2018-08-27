@@ -16,7 +16,7 @@
             <div class="weui-label">用户名</div>
           </div>
           <div class="weui-cell__bd">
-            <input class="weui-input" placeholder=" "/>
+            <input class="weui-input" @input="bindinputName" placeholder=" "/>
           </div>
         </div>
       </div>
@@ -27,14 +27,14 @@
             <div class="weui-label">密码</div>
           </div>
           <div class="weui-cell__bd">
-            <input type="password" class="weui-input" placeholder=" "/>
+            <input type="password" class="weui-input" @input="bindinputPassword" placeholder=" "/>
           </div>
         </div>
       </div>
     </div>
     <div class="weui-btn-area">
       <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" @click="login">登录</a>
-      <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" :href="'/pages/jbindex/main'">登录</a>
+      <!--<a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" :href="'/pages/jbindex/main'">登录</a>-->
     </div>
     <!--<a class="btn btn-lg text-white btn-block btn-secondary px-0"  @click="refuse">取消</a>-->
 
@@ -47,15 +47,30 @@
   import api from '@/api/index'
 
   export default {
+    data() {
+      return {
+        username: '',
+        password: ''
+      }
+    },
+
     methods: {
       refuse () {
         console.log('refuse')
         wx.navigateBack({delta: 1})
       },
+      bindinputName (e) {
+        this.username = e.mp.detail.value
+        //console.log(e.mp.detail.value)
+      },
+      bindinputPassword (e) {
+        this.password = e.mp.detail.value
+        //console.log(e.mp.detail.value)
+      },
       login() {
         let data = {
-          username: "krisv",
-          password: "krisv"
+          username: this.username,
+          password: this.password
         }
         // 获取项目列表接口
         api.get('/auth.do', data).then(response => {

@@ -24,8 +24,17 @@
       <a  @click="goProjectDetail(processInstance)">
         <div class="row p-1">
           <div class="col-4 text-right align-items-center">{{processInstance.processName}}</div>
-          <template v-if="processInstance.processInstanceState==2">
+          <template v-if="processInstance.processInstanceState==1">
             <div class="col-6 p-2 bg-success text-white"></div>
+          </template>
+          <template v-else-if="processInstance.processInstanceState==2">
+            <div class="col-6 p-2 bg-primary text-white"></div>
+          </template>
+          <template v-else-if="processInstance.processInstanceState==3">
+            <div class="col-6 p-2 bg-warning text-white"></div>
+          </template>
+          <template v-else-if="processInstance.processInstanceState==4">
+            <div class="col-6 p-2 bg-danger text-white"></div>
           </template>
           <template v-else>
             <div class="col-6 p-2 bg-secondary text-white"></div>
@@ -34,6 +43,31 @@
       </a>
     </template>
 
+    <div class="row pl-3 pr-3 pt-3">
+      <div class="col-3 text-left align-items-center">
+        <span class="col-3 bg-secondary text-white"></span>
+        <span class="p-1" style="font-size:12px;">未开始</span>
+      </div>
+      <div class="col-3 text-left align-items-center">
+        <span class="col-3 bg-success text-white"></span>
+        <span class="p-1" style="font-size:12px;">执行中</span>
+      </div>
+      <div class="col-3 text-left align-items-center">
+        <span class="col-3 bg-primary text-white"></span>
+        <span class="p-1" style="font-size:12px;">已完成</span>
+      </div>
+    </div>
+
+    <div class="row pl-3 pr-3 pt-1">
+      <div class="col-3 text-left align-items-center">
+        <span class="col-3 bg-warning text-white"></span>
+        <span class="p-1" style="font-size:12px;">即将到期</span>
+      </div>
+      <div class="col-3 text-left align-items-center">
+        <span class="col-3 bg-danger text-white"></span>
+        <span class="p-1" style="font-size:12px;">已过期</span>
+      </div>
+    </div>
     <!--<a  :href="'/pages/jbtest-upload/main'">-->
       <!--<div class="row p-1">-->
           <!--<div class="col-4 text-right align-items-center">签订及复核文件</div>-->
@@ -108,19 +142,26 @@
     data() {
       return {
         processInstances: [],
+        containerId: '',
         projectName: '',
         totalProgress: 0
       }
     },
+    onShow() {
+      this.getParams()
+    },
+
     mounted() {
       this.listPrecessInstances()
-      this.getParams()
       this.getTotalProgress()
     },
     methods: {
       listPrecessInstances() {
+        let data = {
+          containerId: this.containerId,
+        }
         // 获取项目列表接口
-        api.get('/listPrecessInstances.do').then(response => {
+        api.get('/listPrecessInstances.do',data).then(response => {
           //console.log(JSON.stringify(response))
           //var result = response.result
           console.log(JSON.stringify(response))
@@ -134,14 +175,24 @@
 
       getParams(){
         // 取到路由带过来的参数
-        console.log(this.$root.$mp.query.projectName)
+        console.log("containerId=="+this.$root.$mp.query.containerId)
+        console.log("projectName=="+this.$root.$mp.query.projectName)
+
+        var containerId = this.$root.$mp.query.containerId
         var projectName = this.$root.$mp.query.projectName
+
+        wx.setStorageSync('containerId', containerId)
+
+        this.containerId = containerId
         this.projectName = projectName
       },
 
       getTotalProgress() {
+        let data = {
+          containerId: this.containerId,
+        }
         // 获取完成百分比接口
-        api.get('/totalProgress.do').then(response => {
+        api.get('/totalProgress.do',data).then(response => {
           console.log(JSON.stringify(response))
           var entity = response[1]
           console.log(entity)

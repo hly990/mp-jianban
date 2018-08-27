@@ -5,6 +5,8 @@ import _ from 'lodash'
 const api = new Fly()
 
 api.config.baseURL = 'http://localhost:9000/jianban/jbpm7'
+//api.config.baseURL = 'https://dmodev.cn/jianban/jbpm7'
+
 //api.config.baseURL = 'http://localhost:8080/kie-server/services/rest'
 //api.config.baseURL = 'https://cnodejs.org/api/v1'
 
