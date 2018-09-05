@@ -77,6 +77,8 @@
           console.log(JSON.stringify(response))
           console.log(response[1])
           var user = response[1]
+
+          wx.setStorageSync('userId', user.exUserId)
           wx.setStorageSync('username', user.username)
           wx.setStorageSync('loginname', user.password)
           wx.setStorageSync('roleId', user.roleId)

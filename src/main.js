@@ -27,12 +27,13 @@ export default {
       'pages/me/main',
       'pages/comment/main',
       'pages/user/main',
-      '^pages/jbindex/main',
+      'pages/jbindex/main',
+      'pages/jbindex-manage-project/main',
       'pages/jbdashboard/main',
       'pages/jbdetail/main',
       'pages/jbtest/main',
       'pages/jbtest-upload/main',
-      'pages/jblogin/main'
+      '^pages/jblogin/main'
     ],
     window: {
       backgroundTextStyle: 'light',

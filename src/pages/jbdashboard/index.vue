@@ -23,48 +23,42 @@
       <!--<a  :href="'/pages/jbtest-upload/main'">-->
       <a  @click="goProjectDetail(processInstance)">
         <div class="row p-1">
-          <div class="col-4 text-right align-items-center">{{processInstance.processName}}</div>
-          <template v-if="processInstance.processInstanceState==1">
-            <div class="col-6 p-2 bg-success text-white"></div>
-          </template>
-          <template v-else-if="processInstance.processInstanceState==2">
-            <div class="col-6 p-2 bg-primary text-white"></div>
-          </template>
-          <template v-else-if="processInstance.processInstanceState==3">
-            <div class="col-6 p-2 bg-warning text-white"></div>
-          </template>
-          <template v-else-if="processInstance.processInstanceState==4">
-            <div class="col-6 p-2 bg-danger text-white"></div>
-          </template>
-          <template v-else>
-            <div class="col-6 p-2 bg-secondary text-white"></div>
-          </template>
+          <div class="col-4 text-right align-items-center">{{processInstance.name}}</div>
+            <template v-if="processInstance.processInstanceState==3">
+              <div class="col-6 p-2  text-white" :style="{backgroundColor: '#FECD51'}"></div>
+            </template>
+            <template v-else-if="processInstance.processInstanceState==4">
+              <div class="col-6 p-2  text-white" :style="{backgroundColor: '#F76074'}"></div>
+            </template>
+            <template v-else>
+              <div class="col-6 p-2  text-white" :style="{backgroundColor:'#FFFFFF'}"></div>
+            </template>
         </div>
       </a>
     </template>
 
-    <div class="row pl-3 pr-3 pt-3">
-      <div class="col-3 text-left align-items-center">
-        <span class="col-3 bg-secondary text-white"></span>
-        <span class="p-1" style="font-size:12px;">未开始</span>
-      </div>
-      <div class="col-3 text-left align-items-center">
-        <span class="col-3 bg-success text-white"></span>
-        <span class="p-1" style="font-size:12px;">执行中</span>
-      </div>
-      <div class="col-3 text-left align-items-center">
-        <span class="col-3 bg-primary text-white"></span>
-        <span class="p-1" style="font-size:12px;">已完成</span>
-      </div>
-    </div>
+    <!--<div class="row pl-3 pr-3 pt-3">-->
+      <!--<div class="col-3 text-left align-items-center">-->
+        <!--<span class="col-3 bg-secondary text-white"></span>-->
+        <!--<span class="p-1" style="font-size:12px;">未开始</span>-->
+      <!--</div>-->
+      <!--<div class="col-3 text-left align-items-center">-->
+        <!--<span class="col-3 bg-success text-white"></span>-->
+        <!--<span class="p-1" style="font-size:12px;">执行中</span>-->
+      <!--</div>-->
+      <!--<div class="col-3 text-left align-items-center">-->
+        <!--<span class="col-3 bg-primary text-white"></span>-->
+        <!--<span class="p-1" style="font-size:12px;">已完成</span>-->
+      <!--</div>-->
+    <!--</div>-->
 
     <div class="row pl-3 pr-3 pt-1">
       <div class="col-3 text-left align-items-center">
-        <span class="col-3 bg-warning text-white"></span>
+        <span class="col-3  text-white" :style="{backgroundColor: '#FECD51'}"></span>
         <span class="p-1" style="font-size:12px;">即将到期</span>
       </div>
       <div class="col-3 text-left align-items-center">
-        <span class="col-3 bg-danger text-white"></span>
+        <span class="col-3  text-white" :style="{backgroundColor: '#F76074'}"></span>
         <span class="p-1" style="font-size:12px;">已过期</span>
       </div>
     </div>
@@ -142,7 +136,7 @@
     data() {
       return {
         processInstances: [],
-        containerId: '',
+        projectId: '',
         projectName: '',
         totalProgress: 0
       }
@@ -152,18 +146,16 @@
     },
 
     mounted() {
-      this.listPrecessInstances()
+      this.listWorkFlowInstance()
       this.getTotalProgress()
     },
     methods: {
-      listPrecessInstances() {
+      listWorkFlowInstance() {
         let data = {
-          containerId: this.containerId,
+          projectId: this.projectId,
         }
         // 获取项目列表接口
-        api.get('/listPrecessInstances.do',data).then(response => {
-          //console.log(JSON.stringify(response))
-          //var result = response.result
+        api.get('/listWorkFlowInstance.do',data).then(response => {
           console.log(JSON.stringify(response))
           console.log(response[2])
           this.processInstances = response[2]
@@ -175,40 +167,49 @@
 
       getParams(){
         // 取到路由带过来的参数
-        console.log("containerId=="+this.$root.$mp.query.containerId)
-        console.log("projectName=="+this.$root.$mp.query.projectName)
+//        console.log("containerId=="+this.$root.$mp.query.containerId)
+//        console.log("projectName=="+this.$root.$mp.query.projectName)
+//
+//        var containerId = this.$root.$mp.query.containerId
+//        var projectName = this.$root.$mp.query.projectName
+//
+//        wx.setStorageSync('containerId', containerId)
+//
+//        this.containerId = containerId
+//        this.projectName = projectName
 
-        var containerId = this.$root.$mp.query.containerId
-        var projectName = this.$root.$mp.query.projectName
+        console.log("projectId=="+this.$root.$mp.query.projectId)
+        this.projectId = this.$root.$mp.query.projectId
 
-        wx.setStorageSync('containerId', containerId)
+        wx.setStorageSync('projectId', this.projectId)
 
-        this.containerId = containerId
-        this.projectName = projectName
+
       },
 
       getTotalProgress() {
-        let data = {
-          containerId: this.containerId,
-        }
-        // 获取完成百分比接口
-        api.get('/totalProgress.do',data).then(response => {
-          console.log(JSON.stringify(response))
-          var entity = response[1]
-          console.log(entity)
-          this.totalProgress = entity.percentNum
-        }).catch(error => {
-          console.log(error)
-        })
+//        let data = {
+//          containerId: this.containerId,
+//        }
+//        // 获取完成百分比接口
+//        api.get('/totalProgress.do',data).then(response => {
+//          console.log(JSON.stringify(response))
+//          var entity = response[1]
+//          console.log(entity)
+//          this.totalProgress = entity.percentNum
+//        }).catch(error => {
+//          console.log(error)
+//        })
       },
 
       goProjectDetail(processInstance) {
-        console.log("goProjectDetail processInstance.processInstanceId=="+processInstance.processInstanceId)
-        wx.setStorageSync('processInstanceId', processInstance.processInstanceId)
-//        wx.setStorageSync('loginname', user.password)
-//        wx.setStorageSync('roleId', user.roleId)
+//        console.log("goProjectDetail processInstance.processInstanceId=="+processInstance.processInstanceId)
+//        wx.setStorageSync('processInstanceId', processInstance.processInstanceId)
+//        wx.navigateTo({
+//          url: '/pages/jbtest-upload/main'
+//        })
+
         wx.navigateTo({
-          url: '/pages/jbtest-upload/main'
+          url: '/pages/jbtask/main?parentId='+processInstance.exWorkFlowInstanceId
         })
       }
 

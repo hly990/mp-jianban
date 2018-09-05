@@ -42,7 +42,7 @@ module.exports = {
     alias: {
       'vue': 'mpvue',
       '@': resolve('src'),
-      'wx': resolve('src/utils/wx')
+      'wx': resolve('src/utils/wx'),
     },
     symlinks: false
   },
