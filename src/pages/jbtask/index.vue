@@ -14,7 +14,7 @@
             </div>
           </li>
         </swiper-item>
-        <swiper-item style="margin-top:1px;">
+        <swiper-item v-if="roleId==1" style="margin-top:1px;">
           <li>
             <div class="row pl-3 pt-3">
               <div class="col-7">
@@ -36,7 +36,7 @@
     </template>
 
     <template v-if="number==0">
-      <div class="fixed-top"  style="height: 90vh">
+      <div v-if="roleId==1" class="fixed-top"  style="height: 90vh">
         <div class="d-flex h-100 flex-column justify-content-center align-items-center">
           <img src="/static/images/icon/notification.png" class="pb-3" style="width: 4rem; height: 4rem">
           <p class="font-weight-bold">还没有创建任务</p>
@@ -47,7 +47,7 @@
       </div>
     </template>
     <template v-else-if="number>0">
-      <div class="row pl-3 pt-3">
+      <div v-if="roleId==1" class="row pl-3 pt-3">
         <div class="col-10 d-flex h-100 flex-column justify-content-center align-items-center">
           <a :href="'/pages/jbtask-manage/main?parentId='+parentId" class="btn btn-primary text-white w-25 mt-5">创建任务</a>
         </div>
@@ -66,6 +66,7 @@ export default {
     return {
       tasks: [],
       parentId:'',
+      roleId:0,
       number:0
     }
   },
@@ -151,6 +152,8 @@ export default {
         console.log("parentId=="+this.$root.$mp.query.parentId)
         this.parentId = this.$root.$mp.query.parentId
       }
+      let roleId = wx.getStorageSync('roleId')
+      this.roleId = roleId
     }
 
   }

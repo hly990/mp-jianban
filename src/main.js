@@ -33,7 +33,9 @@ export default {
       'pages/jbdetail/main',
       'pages/jbtest/main',
       'pages/jbtest-upload/main',
-      '^pages/jblogin/main'
+      '^pages/jblogin/main',
+      'pages/jbmember/main',
+      'pages/jbmember-manage/main'
     ],
     window: {
       backgroundTextStyle: 'light',

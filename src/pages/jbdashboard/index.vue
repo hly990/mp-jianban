@@ -125,6 +125,12 @@
       <!--</div>-->
     <!--</div>-->
 
+    <div v-if="userRoleId==1" class="row pl-3 pt-3">
+      <div class="col-10 d-flex h-100 flex-column justify-content-center align-items-center">
+        <a href="/pages/jbmember/main" class="btn btn-primary text-white w-25 mt-5"><span style="font-size: 12px;">项目成员管理</span></a>
+      </div>
+    </div>
+
   </div>
 
 </template>
@@ -137,6 +143,7 @@
       return {
         processInstances: [],
         projectId: '',
+        userRoleId: 0,
         projectName: '',
         totalProgress: 0
       }
@@ -178,27 +185,29 @@
 //        this.containerId = containerId
 //        this.projectName = projectName
 
-        console.log("projectId=="+this.$root.$mp.query.projectId)
+        console.log("projectId=="+this.$root.$mp.query.projectId+"\r\n userRoleId=="+this.$root.$mp.query.userRoleId)
         this.projectId = this.$root.$mp.query.projectId
+        this.userRoleId = this.$root.$mp.query.userRoleId
 
         wx.setStorageSync('projectId', this.projectId)
+        wx.setStorageSync('userRoleId', this.userRoleId)
 
 
       },
 
       getTotalProgress() {
-//        let data = {
-//          containerId: this.containerId,
-//        }
-//        // 获取完成百分比接口
-//        api.get('/totalProgress.do',data).then(response => {
-//          console.log(JSON.stringify(response))
-//          var entity = response[1]
-//          console.log(entity)
-//          this.totalProgress = entity.percentNum
-//        }).catch(error => {
-//          console.log(error)
-//        })
+        let data = {
+          projectId: this.projectId,
+        }
+        // 获取完成百分比接口
+        api.get('/totalProgress.do',data).then(response => {
+          console.log(JSON.stringify(response))
+          var totalProgress = response[1]
+          console.log("totalProgress="+totalProgress)
+          this.totalProgress = totalProgress
+        }).catch(error => {
+          console.log(error)
+        })
       },
 
       goProjectDetail(processInstance) {

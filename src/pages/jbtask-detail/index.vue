@@ -16,12 +16,11 @@
       data() {
         return {
           url: '',
-          containerId: '',
-          processInstanceId: ''
+          taskId: ''
         }
       },
       onShow() {
-        this.getProcessInstanceId()
+        this.getTaskId()
       },
       mounted() {
 
@@ -37,24 +36,19 @@
       },
 
       methods: {
-        getProcessInstanceId() {
-          let  processInstanceId = wx.getStorageSync('processInstanceId')
-          this.processInstanceId = processInstanceId
-
-          let containerId = wx.getStorageSync('containerId')
-          this.containerId = containerId
-
-          wx.removeStorageSync('processInstanceId')
-
+        getTaskId() {
+          if(this.$root.$mp.query && this.$root.$mp.query.taskId) {
+            this.taskId = this.$root.$mp.query.taskId
+          }
         },
         loadPage() {
-          //let url = 'http://127.0.0.1/mp-jianban-web/jianban-form2.html?roleId=1'
-          let url = 'https://dmodev.cn/mp-jianban-web/jianban-form2.html?roleId=1'
+          let roleId = wx.getStorageSync('roleId')
+          let url = 'http://127.0.0.1/mp-jianban-web/jianban-form2.html?roleId='+roleId
+          //let url = 'https://dmodev.cn/mp-jianban-web/jianban-form2.html?roleId='++roleId
           if(this.processInstanceId!=''){
 
-            url+="&processInstanceId="+this.processInstanceId
+            url+="&taskId="+this.taskId
 
-            url+="&containerId="+this.containerId
           }
           this.url = url
         }

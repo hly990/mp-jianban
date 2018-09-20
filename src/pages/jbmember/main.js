@@ -6,6 +6,6 @@ app.$mount()
 
 export default {
   config: {
-    navigationBarTitleText: '任务详情'
+    navigationBarTitleText: '项目成员管理'
   }
 }
