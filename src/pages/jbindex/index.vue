@@ -24,7 +24,7 @@
               </div>
 
                <div class="col-1" :style="{padding: '10px'}">
-                <a class="p-1 btn btn-sm text-white  btn-primary" :href="'/pages/jbindex-manage-project/main?projectId='+project.exProjectId">改名</a>
+                <a class="p-1 btn btn-sm text-white  btn-primary" :href="'/pages/jbindex-manage-project/main?projectId='+project.exProjectId">修改</a>
               </div>
 
               <div class="col-1" :style="{padding: '10px'}">

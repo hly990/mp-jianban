@@ -45,6 +45,13 @@
           <a :href="'/pages/jbtask-manage/main?parentId='+parentId" class="btn btn-primary text-white w-25 mt-5">创建任务</a>
         </div>
       </div>
+      <div v-else class="fixed-top"  style="height: 90vh">
+        <div class="d-flex h-100 flex-column justify-content-center align-items-center">
+          <img src="/static/images/icon/notification.png" class="pb-3" style="width: 4rem; height: 4rem">
+          <p class="font-weight-bold">还没有创建任务</p>
+        </div>
+      </div>
+
     </template>
     <template v-else-if="number>0">
       <div v-if="roleId==1" class="row pl-3 pt-3">
