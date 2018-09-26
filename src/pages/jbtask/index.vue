@@ -9,8 +9,20 @@
       <swiper :style="{height:'81px'}">
         <swiper-item>
           <li>
-            <div class="weui-btn-area">
-              <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" :href="'/pages/jbtask-detail/main?taskId='+task.exWorkFlowInstanceId">{{task.name}}</a>
+            <div v-if="task.state==3" class="weui-btn-area">
+              <a class="pt-3 btn btn-lg text-warning btn-block btn-primary mb-3 px-0" :href="'/pages/jbtask-detail/main?taskId='+task.exWorkFlowInstanceId">
+                {{task.name}}
+              </a>
+            </div>
+            <div v-else-if="task.state==4" class="weui-btn-area">
+              <a class="pt-3 btn btn-lg text-danger btn-block btn-primary mb-3 px-0" :href="'/pages/jbtask-detail/main?taskId='+task.exWorkFlowInstanceId">
+                {{task.name}}
+              </a>
+            </div>
+            <div v-else class="weui-btn-area">
+              <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" :href="'/pages/jbtask-detail/main?taskId='+task.exWorkFlowInstanceId">
+                {{task.name}}
+              </a>
             </div>
           </li>
         </swiper-item>

@@ -12,7 +12,7 @@
         <swiper-item>
           <li>
             <div class="weui-btn-area">
-              <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" :href="'/pages/jbmember-manage/main?userId='+user.exUserId">{{user.name}}</a>
+              <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" :href="'/pages/jbmember-manage/main?userId='+user.exUserId">{{user.des}}</a>
             </div>
           </li>
         </swiper-item>
@@ -20,7 +20,7 @@
           <li>
             <div class="row pl-3 pt-3">
               <div class="col-7">
-                <a class="pt-3 btn btn-lg text-white btn-block btn-primary px-0" :href="'/pages/jbmember-manage/main?userId='+user.exUserId">{{user.name}}</a>
+                <a class="pt-3 btn btn-lg text-white btn-block btn-primary px-0" :href="'/pages/jbmember-manage/main?userId='+user.exUserId">{{user.des}}</a>
               </div>
 
                <div class="col-1" :style="{padding: '10px'}">

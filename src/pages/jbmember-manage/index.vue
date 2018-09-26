@@ -4,10 +4,10 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input">
           <div class="weui-cell__hd">
-            <div class="weui-label">用户名</div>
+            <div class="weui-label">登录名</div>
           </div>
           <div class="weui-cell__bd">
-            <input class="weui-input" @input="bindUserName" :value="username"  placeholder=" "/>
+            <input class="weui-input" @input="bindUserName" :value="username"  @focus="clearPlaceHolder" :placeholder="tips"/>
           </div>
         </div>
       </div>
@@ -23,8 +23,22 @@
           </div>
         </div>
       </div>
+      <span>{{alertMessage2}}</span>
+
+      <div class="weui-cells weui-cells_after-title">
+        <div class="weui-cell weui-cell_input">
+          <div class="weui-cell__hd">
+            <div class="weui-label">真实姓名</div>
+          </div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" @input="bindDes" :value="des" placeholder=" "/>
+          </div>
+        </div>
+      </div>
+      <span>{{alertMessage3}}</span>
+
     </div>
-    <span>{{alertMessage2}}</span>
+
     <div class="weui-btn-area">
       <a class="pt-3 btn btn-lg text-white btn-block btn-primary mb-3 px-0" @click="saveUser">确定</a>
     </div>
@@ -42,8 +56,11 @@
       return {
         username: '',
         password: '',
+        des: '',
+        tips: '推荐使用手机号',
         alertMessage1: '',
         alertMessage2: '',
+        alertMessage3: '',
         save: true,
         projectId:'',
         exUserId: ''
@@ -64,6 +81,13 @@
         this.password = e.mp.detail.value
         console.log(e.mp.detail.value)
       },
+      bindDes (e) {
+        this.des = e.mp.detail.value
+        console.log(e.mp.detail.value)
+      },
+      clearPlaceHolder(e) {
+        this.tips = ''
+      },
       saveUser(){
         if (this.$root.$mp.query && this.$root.$mp.query.exUserId) {
           this.exUserId = this.$root.$mp.query.exUserId
@@ -72,7 +96,7 @@
 
         if(this.username==''){
           //alert('name is null.')
-          this.alertMessage1 = '用户名不能为空。'
+          this.alertMessage1 = '登录名不能为空。'
           this.save = false
         }else{
           this.save = true
@@ -86,22 +110,23 @@
           this.save = true
         }
 
+        if(this.des==''){
+          this.alertMessage3 = '真实姓名不能为空。'
+          this.save = false
+        }else{
+          this.save = true
+        }
+
         if(this.save){
           if(this.exUserId==''){ //insert
             let data = {
               username: this.username,
               password: this.password,
+              des: this.des,
               projectId: wx.getStorageSync('projectId')
             }
             api.get('/addUser.do', data).then(response => {
               console.log(JSON.stringify(response))
-//              this.alertMessage1 = ''
-//              this.alertMessage2 = ''
-//              this.username = ''
-//              this.password = ''
-////              wx.navigateTo({
-//                url: '/pages/jbindex/main'
-//              })
               wx.navigateBack({
                 delta: 1
               })
@@ -113,17 +138,11 @@
             let data = {
               username: this.username,
               password: this.password,
+              des: this.des,
               exUserId: this.exUserId
             }
             api.get('/updateUser.do', data).then(response => {
               console.log(JSON.stringify(response))
-//              this.alertMessage1 = ''
-//              this.alertMessage2 = ''
-//              this.username = ''
-//              this.password = ''
-//              wx.navigateTo({
-//                url: '/pages/jbindex/main'
-//              })
               wx.navigateBack({
                 delta: 1
               })
@@ -141,8 +160,10 @@
       initData() {
         this.alertMessage1 = ''
         this.alertMessage2 = ''
+        this.alertMessage3 = ''
         this.username = ''
         this.password = ''
+        this.des = ''
       },
 
       getUser() {
@@ -157,6 +178,7 @@
 
             this.username = instance.username
             this.password = instance.password
+            this.des = instance.des
             this.exUserId = instance.exUserId
 
           }).catch(error => {
@@ -167,9 +189,7 @@
       },
 
       mounted () {
-//        if (this.$root.$mp.query && this.$root.$mp.query.from) {
-//          this.from = this.$root.$mp.query.from
-//        }
+
       }
     }
   }
