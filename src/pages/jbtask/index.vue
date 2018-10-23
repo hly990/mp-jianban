@@ -30,7 +30,7 @@
           <li>
             <div class="row pl-3 pt-3">
               <div class="col-7">
-                <a class="pt-3 btn btn-lg text-white btn-block btn-primary px-0" :href="'/pages/jbtask-detail/main?taskId='+task.exWorkFlowInstanceId">{{task.name}}</a>
+                <a class="pt-3 btn btn-lg text-white btn-block btn-primary px-0" :href="'/pages/jbtask-detail/main?taskId='+task.exWorkFlowInstanceId+'&parentId='+task.parentId">{{task.name}}</a>
               </div>
 
                <div class="col-1" :style="{padding: '10px'}">
@@ -170,6 +170,10 @@ export default {
       if (this.$root.$mp.query && this.$root.$mp.query.parentId) {
         console.log("parentId=="+this.$root.$mp.query.parentId)
         this.parentId = this.$root.$mp.query.parentId
+        wx.setStorageSync('parentId',this.parentId)
+      } else {
+        this.parentId = wx.getStorageSync('parentId')
+
       }
       let roleId = wx.getStorageSync('roleId')
       this.roleId = roleId

@@ -43,8 +43,8 @@
         },
         loadPage() {
           let roleId = wx.getStorageSync('roleId')
-          let url = 'http://127.0.0.1/mp-jianban-web/jianban-form2.html?roleId='+roleId
-          //let url = 'https://dmodev.cn/mp-jianban-web/jianban-form2.html?roleId='++roleId
+          //let url = 'http://127.0.0.1/mp-jianban-web/jianban-form2.html?roleId='+roleId
+          let url = 'https://dmodev.cn/mp-jianban-web/jianban-form2.html?roleId='+roleId
           if(this.processInstanceId!=''){
 
             url+="&taskId="+this.taskId

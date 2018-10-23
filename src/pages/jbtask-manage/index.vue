@@ -21,7 +21,7 @@
           <div class="weui-cell__bd">
             <picker class="weui-btn" mode="date" :value="date" start="2018-08-01" end="2030-09-01" @change="bindDateChange">
               <!--<button type="default">日期选择器</button>-->
-              <input class="weui-input" placeholder=" 请选择日期" :value="date"/>
+              <input class="weui-input" placeholder=" 请选择日期" :value="date" disabled="disabled"/>
             </picker>
           </div>
         </div>
@@ -136,7 +136,10 @@
             }
             api.get('/addTask.do', data).then(response => {
               console.log(JSON.stringify(response))
+              this.taskId==''
               this.alertMessage = ''
+              this.date = '请选择日期'
+              this.cc = ''
               this.name = ''
 //              wx.navigateTo({
 //                url: '/pages/jbtask/main?parentId='+this.parentId
@@ -153,11 +156,14 @@
               name: this.name,
               expirationTime: this.date,
               cc: this.cc,
-              taskId: this.taskId
+              exWorkFlowInstanceId: this.taskId
             }
             api.get('/updateTask.do', data).then(response => {
               console.log(JSON.stringify(response))
+              this.taskId==''
               this.alertMessage = ''
+              this.date = '请选择日期'
+              this.cc = ''
               this.name = ''
 //              wx.navigateTo({
 //                url: '/pages/jbtask/main?parentId='+this.parentId
@@ -187,7 +193,7 @@
       initData() {
         if(this.$root.$mp.query && this.$root.$mp.query.taskId){
           let data = {
-            taskId: this.$root.$mp.query.taskId
+            exWorkFlowInstanceId: this.$root.$mp.query.taskId
           }
           //set init data
           api.get('/getTask.do', data).then(response => {
@@ -199,7 +205,7 @@
             //format date to yyyy-mm-dd
             console.log("instance.expirationTime=="+instance.expirationTime)
             var expirationTime = instance.expirationTime
-            if(instance.expirationTime!=undefined){
+            if(instance.expirationTime!=undefined && instance.expirationTime!=null){
               returnDate = instance.expirationTime.substr(0,10)
               var d = new Date(instance.expirationTime),
                 month = '' + (d.getMonth() + 1),

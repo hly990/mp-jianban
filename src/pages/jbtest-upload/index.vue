@@ -48,8 +48,8 @@
 
         },
         loadPage() {
-          let url = 'http://127.0.0.1/mp-jianban-web/jianban-form2.html?roleId=1'
-          //let url = 'https://dmodev.cn/mp-jianban-web/jianban-form2.html?roleId=1'
+          //let url = 'http://127.0.0.1/mp-jianban-web/jianban-form2.html?roleId=1'
+          let url = 'https://dmodev.cn/mp-jianban-web/jianban-form2.html?roleId=1'
           if(this.processInstanceId!=''){
 
             url+="&processInstanceId="+this.processInstanceId

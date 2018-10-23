@@ -1,7 +1,7 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": false,
 		"postcss": true,
 		"minified": true,
@@ -9,8 +9,8 @@
 	},
 	"miniprogramRoot": "./dist/",
 	"compileType": "miniprogram",
-	"appid": "wxb5062f11907a3bd5",
-	"projectname": "mp-jianban-v1",
+	"appid": "wxf2127c5303b4eba4",
+	"projectname": "mp-jianban-v1.2",
 	"condition": {
 		"search": {
 			"current": -1,
